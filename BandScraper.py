@@ -2,6 +2,12 @@ import requests
 import json
 from bs4 import BeautifulSoup
 import datetime
+import boto3
+
+s3 = boto3.client('s3', 'us-east-1')
+obj = s3.get_object(Bucket="ian-test-bucket-go-python", Key="Bands.json")
+fileContents = obj['Body'].read().decode('utf-8')
+json_content = json.loads(fileContents)
 
 msgList = set()
 def parser(idDict):

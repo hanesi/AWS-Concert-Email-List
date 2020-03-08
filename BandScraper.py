@@ -5,12 +5,23 @@ import datetime
 import boto3
 
 s3 = boto3.client('s3', 'us-east-1')
+sns = boto3.client("sns")
 obj = s3.get_object(Bucket="ian-test-bucket-go-python", Key="Bands.json")
 fileContents = obj['Body'].read().decode('utf-8')
 json_content = json.loads(fileContents)
 
-msgList = set()
+
+def lambda_handler(event, context):
+    concertList = list(parser(json_content))
+    s = "\n".join(i for i in concertList)
+    response = sns_client.publish(
+        TopicArn="Your-ARN-Here"
+        Subject="Weekly Concert Update!"
+        MessageStructure=f"The following concerts are upcoming:\n {s}"
+    )
+
 def parser(idDict):
+    msgSet = set()
     for k, v in idDict.items():
         url = f"https://www.songkick.com/artists/{v}-{k}/calendar"
         resp = requests.get(url)
@@ -33,9 +44,7 @@ def parser(idDict):
                         date = test[0]['endDate']
                         band = test[0]['name']
                         msg = f"{band} is playing at {venue} on {date}"
-                        msgList.add(msg)
-                        print(msg)
+                        msgSet.add(msg)
             except:
                 pass
-
-parser(bandDict)
+    return msgSet

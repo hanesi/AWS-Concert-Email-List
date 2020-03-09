@@ -12,6 +12,8 @@ Location is currently hard coded to Brooklyn and New York (NYC). These are the s
 
 Bands.JSON will need to be configured for each individual user (unless you only want my band notifications). There may be an easier way, but i just went to each artist's page on songkick.com and got the IDs that way. Good enough for only 30 or so artists.
 
+Users will need to configure an SNS topic to include their desired email address, then use the resulting ARN for the environment variable listed above. This is very easy to do and the free tier of SNS is 1000 emails/year.
+
 The deployment package is ready to go as is, environment variables can be configured in the AWS Lambda Console, just remember the names you configure have to match the names in the script
 
 ## TO DO

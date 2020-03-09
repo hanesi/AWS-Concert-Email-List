@@ -5,7 +5,7 @@ import datetime
 import boto3
 
 s3 = boto3.client('s3', 'us-east-1')
-sns = boto3.client("sns")
+sns_client = boto3.client("sns")
 obj = s3.get_object(Bucket="ian-test-bucket-go-python", Key="Bands.json")
 fileContents = obj['Body'].read().decode('utf-8')
 json_content = json.loads(fileContents)

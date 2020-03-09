@@ -17,7 +17,7 @@ def lambda_handler(event, context):
     response = sns_client.publish(
         TopicArn="Your-ARN-Here",
         Subject="Weekly Concert Update!",
-        MessageStructure=f"The following concerts are upcoming:\n {s}"
+        MessageS=f"The following concerts are upcoming:\n {s}"
     )
 
 def parser(idDict):

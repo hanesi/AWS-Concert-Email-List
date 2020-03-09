@@ -3,19 +3,21 @@ import json
 from bs4 import BeautifulSoup
 import datetime
 import boto3
+import os
 
 s3 = boto3.client('s3', 'us-east-1')
 sns_client = boto3.client("sns")
-obj = s3.get_object(Bucket="ian-test-bucket-go-python", Key="Bands.json")
+obj = s3.get_object(Bucket=os.environ["BucketName"], Key=os.environ["BandJSON"])
 fileContents = obj['Body'].read().decode('utf-8')
 json_content = json.loads(fileContents)
 
 
 def lambda_handler(event, context):
     concertList = list(parser(json_content))
+    concertList.sort()
     s = "\n".join(i for i in concertList)
     response = sns_client.publish(
-        TopicArn="Your-ARN-Here",
+        TopicArn=os.environ["SNSARN"],
         Subject="Weekly Concert Update!",
         MessageS=f"The following concerts are upcoming:\n {s}"
     )

@@ -15,8 +15,8 @@ def lambda_handler(event, context):
     concertList = list(parser(json_content))
     s = "\n".join(i for i in concertList)
     response = sns_client.publish(
-        TopicArn="Your-ARN-Here"
-        Subject="Weekly Concert Update!"
+        TopicArn="Your-ARN-Here",
+        Subject="Weekly Concert Update!",
         MessageStructure=f"The following concerts are upcoming:\n {s}"
     )
 

@@ -16,5 +16,7 @@ Users will need to configure an SNS topic to include their desired email address
 
 The deployment package is ready to go as is, environment variables can be configured in the AWS Lambda Console, just remember the names you configure have to match the names in the script
 
+Currently the Lambda is set to be triggered by a weekly CloudWatch event. This can be updated to whatever interval the user prefers in the Lambda dashboard
+
 ## TO DO
 Some stuff i got lazy about (set to list to sort, for example) and there are probably more elegant ways to parse the HTML. I also should add more logging too.
